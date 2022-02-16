@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiProduct:'https://student-api.mycodelibraries.com/api'
+
 };
