@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { product } from './product';
@@ -11,7 +11,7 @@ import { product } from './product';
 })
 export class PrimengComponent implements OnInit {
   public product: product|any;
-  products:any;
+  productdata:product|any;
   editProductInfo: any;
  public submitted!: boolean;
  public productDialog!:boolean;
@@ -20,11 +20,11 @@ export class PrimengComponent implements OnInit {
  public hideShow!:boolean;
  
 
-  constructor(private http:HttpClient,) { }
+  constructor(private http:HttpClient,private  changeDetectorRef:ChangeDetectorRef) { }
 
   ngOnInit(): void {
      this.getProduct()
-     
+     this.productdata={}
   }
 
 
@@ -32,6 +32,7 @@ export class PrimengComponent implements OnInit {
    
      this.http.get(`${environment.apiProduct}/product/get`).subscribe((res:any)=>{
        this.product= res.data
+       this.changeDetectorRef.detectChanges();
       console.log(this.product);
      })
   }
@@ -51,108 +52,108 @@ export class PrimengComponent implements OnInit {
   }
 
   deleteProduct(id:string){
-      this.http.delete(`${environment.apiProduct}/product/delete?=${id}`).subscribe((res:any)=>{
-        if(res.success){
+
+      this.http.delete(`${environment.apiProduct}/product/delete?id=${id}`).subscribe((res:any)=>{
+        if(res.isSuccess){
           alert('data successfully delete')
           this.getProduct();
-          this.deleteProduct(id);
-          this.product=[...this.product]
-          // this.productDialog=true;
-          this.product={}
+       this.changeDetectorRef.detectChanges();
+
+        // this.getByProductId(id);
+        console.log(res);
         }else{
           alert(res.message)
         }
         // this.product={},
         // this.productDialog=true;
-      })
+      });
+
   }
 
-  openNew(id?:string){
+  openNew(){
     // this.products = {};
         // this.submitted = false;
-        
-       if(id){
-         this.addShow=false;
-         this.updateShow=true;
-         this.hideShow=true;
-        //  this.updateShow=true;
-        this.getByProductId(id);
-       }else{
-         this.addShow=true;
-         this.updateShow=false;
-         this.hideShow=true;
-       }
-       this.productDialog = true;
+        this.addShow=true;
+        this.updateShow=false;
+        this.hideShow=true;
+        this.productDialog = true;
        
         
   }
 
 
   addProduct(){
+    // if(this.editProductInfo){
+    //     this.updateProduct()
+    //   return
+    // }
    
-    this.http.post(`${environment.apiProduct}/product/add`,this.product.value).
+    this.http.post(`${environment.apiProduct}/product/add`,this.productdata).
     subscribe((res:any)=>{
       this.getProduct();
       // this.getByProductId();
-      this.productDialog=true;
+      // this.productDialog=true;
       this.product=true;
       this.hideShow=true;
-      // if(res.isSuccess){
-      //   this.editProductInfo=null
-      //   alert('data added successfully')
-      //   this.product.reset()
-      //   this.getProduct()
-      // }else{
-      //   alert(res.message)
-      // }
+      this.productDialog=false;
+      if(res.isSuccess){
+        this.editProductInfo=null
+        alert('data added successfully')
+        this.productdata.reset()
+        // this.getProduct()
+        
+      }else{
+        alert(res.message)
+      }
     });
-    
+    this.hideDialog();
   }
 
-  updateProduct(product:product){
-    this.http.post(`${environment.apiProduct}/product/update`,{
+  updateProduct(id:string){
+    debugger
+    this.product;
+    this.http.post(`${environment.apiProduct}/product/update?id=${id}`,this.productdata)
+.subscribe((res:any) =>{
+  this.getProduct();
+  
 
-      // id:this.editProductInfo.id,
-      ...this.product.value
-     }).subscribe((res:any) =>{
        if(res.isSuccess){
+        this.product.reset()
         //  this.editProductInfo=null
+        // this.editProduct(this.productdata);
          alert('data update successfully')
-         this.product.reset()
-         this.getProduct()
-         this.openNew()
-        //  this.editProduct(product)
+        this.changeDetectorRef.detectChanges();
+         
+        
       }else{
          alert(res.message)
+      
        }
-     })
+     });
+     this.productDialog=false;
+    //  this.product;
+
+// this.productdata;
+    
+          
    }
 
-//    editProduct(product:product){
-//      this.productDialog=true;
-//      this.updateShow=true;
-//      this.hideShow=true;
-//     this.editProductInfo = product
-//     this.product.patchValue({
-//      category:product.category,
-//      productName:product.productName,
-//      description:product.description,
-//      price:product.price,
-//      clothSize:product.clothSize,
-//      inStock:product.inStock,
 
-//     })
-//  }  
+editProduct(product:product){
+  
 
-// editProduct(product:product){
-//   this.productDialog=true;
-//   this.openNew();
-//   this.updateShow=true;
-//   this.addShow=false;
-//   this.hideShow=true;
-//   this.getProduct();
-//   this.productDialog=false;
-// }
+  this.getProduct();
+  
+  this.productDialog=true;
+  this.updateShow=true;
+  this.addShow=false;
+  this.hideShow=true;
+// this.editProductInfo = product
+
+this.productdata=product;
+// this.editProductInfo = this.productdata
+
+}
 
  hideDialog(){
     this.productDialog=false;
@@ -161,3 +162,5 @@ export class PrimengComponent implements OnInit {
 
 
 }
+
+
