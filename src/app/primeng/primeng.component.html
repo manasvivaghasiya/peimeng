@@ -1,8 +1,7 @@
 <div class="card">
     
-
-        <p-table #dt [value]="product" [rows]="10" 
-       >
+ <p-table #dt [value]="product" [rows]="10">
+       
      
 <ng-template pTemplate="header">
     <tr>
@@ -33,7 +32,7 @@
         <td>{{product.inStock}}</td>
 
         <td>
-            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="openNew()"></button>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="openNew(product._id)"></button>
             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
         </td>
     </tr>
@@ -72,7 +71,7 @@
         <br>
         <div class="p-field p-col">
             <label for="price">Price</label>
-            <p-inputNumber id="price" [(ngModel)]="product.price" mode="currency"></p-inputNumber>
+            <p-inputNumber id="price" [(ngModel)]="product.price"></p-inputNumber>
         </div>
         <br>
         <div class="p-field">
@@ -89,8 +88,14 @@
                
             </div>
         </div>
-        <div class="field col-4 " style="float:right ">
-            <button pButton label="Add " pRipple (click)="addProduct() " class="btnaddemployee mb-2 "></button>
+        <div class="field col-4 " style="float:right " *ngIf="addShow">
+            <button pButton label="add " pRipple (click)="addProduct() " class="btnaddemployee mb-2 "></button>
+        </div>
+        <div class="field col-4"  style="float:right " *ngIf="hideShow">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        </div>
+        <div class="field col-4 " style="float:right " *ngIf="updateShow">
+            <button pButton label="update " pRipple (click)="updateProduct(product) " class="btnaddemployee mb-2 "></button>
         </div>
 
        

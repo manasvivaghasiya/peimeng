@@ -5,5 +5,6 @@ export interface product{
      price:number;
      clothSize:number;
      inStock:string;
+     _id:string;
 
 }

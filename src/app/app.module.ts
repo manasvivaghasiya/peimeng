@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DropdownModule} from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { PrimeCrudComponent } from './prime-crud/prime-crud.component';
 
 
 
@@ -25,7 +26,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [
     AppComponent,
-    PrimengComponent
+    PrimengComponent,
+    PrimeCrudComponent
   ],
   imports: [
     BrowserModule,
