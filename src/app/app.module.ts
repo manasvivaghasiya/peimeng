@@ -1,6 +1,6 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import {ButtonModule} from 'primeng/button';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DropdownModule} from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { UserListComponent } from './user-list/user-list.component';
+import {ImageModule} from 'primeng/image';
+import {FileUploadModule} from 'primeng/fileupload';
+import {CheckboxModule} from 'primeng/checkbox';
+import { ConfirmationService } from 'primeng/api';
+
 
 
 
@@ -25,7 +31,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [
     AppComponent,
-    PrimengComponent
+    PrimengComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +51,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DropdownModule,
     InputTextareaModule,
     InputNumberModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ImageModule,
+    FileUploadModule,
+    CheckboxModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
-  providers: [
+  providers: [ConfirmationService
    
   ],
   bootstrap: [AppComponent]
