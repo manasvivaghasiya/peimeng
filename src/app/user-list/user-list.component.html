@@ -14,32 +14,33 @@
                 </th>
             </tr>
             <tr>
-              
-                <th>firstName </th>
-                <th>lastName</th>
-                <th>hobbies</th>
-                <th>gender</th>
-                <th>city</th>
-                <th>age</th>
-                <th>image</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Hoobbies</th>
+                <th>Gender</th>
+                <th>City</th>
+                <th>Age</th>
+                <th>Image</th>
+                <th>Action</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-users>
             <tr>
-               <td>{{users.firstName}}</td>
-               <td>{{users.lastName}}</td>
-               <td>{{users.hobbies}}</td>
-               <td>{{users.gender}}</td>
-               <td>{{users.city}}</td>
-               <td>{{users.age}}</td>
-               <td>{{users.image}}</td>
-               <td>{{users.action}}</td>
-               <td>
-                   <img [src]="users.image" [alt]="users.image" width="100" class="shadow-4">
-               </td>
+                <td>{{users.firstName}}</td>
+                <td>{{users.lastName}}</td>
+                <td>{{users.hobbies}}</td>
+                <td>{{users.gender}}</td>
+                <td>{{users.city}}</td>
+                <td>{{users.age}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" (click)="openDialog()" class="pedit"></button>
-                    <button pButton pRipple icon="pi pi-trash" (click)="deleteUser()" class="delete"></button>
+                    <img [src]="users.image" [alt]="users.image" width="100" class="shadow-4" />
+                </td>
+
+                <td>
+
+                    <button pButton pRipple icon="pi pi-pencil" (click)="openDialog(users._id)" class="pedit"></button>
+                    <button pButton pRipple icon="pi pi-trash" (click)="deleteUser(users._id)" class="delete"></button>
+
                 </td>
             </tr>
         </ng-template>
@@ -49,18 +50,23 @@
 <!-- -----------------------form---------------- -->
 
 <p-dialog [(visible)]="userDialog" [style]="{width: '450px'}" header="users Details" [modal]="true" styleClass="p-fluid">
+    <hr>
+    <br>
     <ng-template pTemplate="content">
-        <div class="p-field">
-            <label for="firstName">firstName</label>
-            <input type="text" pInputText id="firstName" [(ngModel)]="userdata.firstName" required autofocus />
-            <small class="p-invalid" *ngIf="submitted && !userdata.firstName">firstName is required.</small>
+        <div class="p-field p-mb-3">
+            <label for="firstName" >firstName:</label>
+           
+            <input type="text"  pInputText id="firstName" required autofocus [(ngModel)]="userdata.firstName" />
+            <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
         </div>
+        <br>
         <div class="p-field">
-            <label for="lastName">lastName</label>
-            <input type="text" pInputText id="lastName" [(ngModel)]="userdata.lastName" required autofocus />
+            <label for="lastName">lastName:</label>
+            <input type="text" pInputText id="lastName" [(ngModel)]="userdata.lastName" required  />
         </div>
-        <div class="field">
-            <label class="mb-3 " for="hobbies">hobbies</label>
+        <br>
+        <div class="p-field">
+            <label class="mb-3 " for="hobbies">hobbies:</label>
             <div class="formgrid grid ">
                 <div class="field-checkbox col-12 ">
                     <p-checkbox name="hobbies" value="Music" label="Music" [(ngModel)]="selectedHobbies" class="hobby col-3"></p-checkbox>
@@ -72,39 +78,39 @@
                 </div>
             </div>
         </div>
-
+      <br>
         <div class="p-field">
-            <label class="p-mb-3">gender</label>
+            <label class="p-mb-3">gender:</label>
             <div class="p-formgrid p-grid">
                 <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="male" name="male" value="male" label="male" [(ngModel)]="userdata.category"></p-radioButton>
+                    <p-radioButton id="Male" name="gender" value="Male" label="male" [(ngModel)]="userdata.gender"></p-radioButton>
                 </div>
                 <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="female" name="female" value="female" label="female" [(ngModel)]="userdata.category"></p-radioButton>
+                    <p-radioButton id="Female" name="gender" value="Female" label="female" [(ngModel)]="userdata.gender"></p-radioButton>
                 </div>
             </div>
         </div>
-
+         <br>
         <div class="field">
             <p-dropdown #dd [options]="cities" [(ngModel)]="selectedCityName" optionLabel="name" optionValue="code" placeholder="----Select City----" (onChange)="onChangeCityValue($event,dd)">
             </p-dropdown>
         </div>
-
+        <br>
         <div class="field">
-            <label for="age">Age</label>
-            <input type="text" id="age" pInputText required [(ngModel)]="userdata.age" class="mb-3" />
+            <label for="age">Age:</label>
+            <input type="text" id="age" pInputText required [(ngModel)]="userdata.age" class="mb-12" />
         </div>
-
+    <br>
         <div class="field">
             <!-- <p-fileUpload name="myfile[]" (uploadHandler)="onimageUpload($event)"></p-fileUpload> -->
-            <input type="file" (change)="onimageUpload()" accept="image/*" class="form-control" />
+            <input type="file" (change)="onimageUpload($event)" accept="image/*" class="form-control" />
             <img [src]="userdata.image" (load)="handleImageLoad()" height="50%" width="20%" style="object-fit: cover;">
         </div>
     </ng-template>
     
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser()"></button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check"  (click)="saveUser()"></button>
     </ng-template>
 </p-dialog>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

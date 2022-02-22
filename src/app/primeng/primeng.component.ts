@@ -53,7 +53,8 @@ export class PrimengComponent implements OnInit {
 
   deleteProduct(id:string){
 
-      this.http.delete(`${environment.apiProduct}/product/delete?id=${id}`).subscribe((res:any)=>{
+      this.http.delete(`${environment.apiProduct}/product/delete?id=${id}`)
+        .subscribe((res:any)=>{
         if(res.isSuccess){
           alert('data successfully delete')
           this.getProduct();

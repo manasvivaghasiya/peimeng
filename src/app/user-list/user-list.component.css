@@ -1,0 +1,38 @@
+.btnadd {
+    float: right;
+    margin-right: 5rem;
+}
+
+.pedit {
+    margin-right: 10px;
+}
+
+.delete {
+    background-color: #7061b6;
+}
+
+.p-paginator {
+    padding: 1rem;
+}
+
+.p-datatable-thead>tr>th {
+    text-align: left;
+}
+
+.p-datatable-tbody>tr>td {
+    cursor: auto;
+}
+
+#male,
+#female {
+    margin-left: 5rem;
+}
+
+.field-checkbox>label {
+    margin-left: 20px;
+}
+
+.hobby {
+    margin-left: 10px;
+    margin-right: 10px
+}
