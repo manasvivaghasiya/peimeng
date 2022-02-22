@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { City, IUser, userdata } from './IUser';
 import { environment } from 'src/environments/environment';
-import { identifierName } from '@angular/compiler';
+// import { identifierName } from '@angular/compiler';
 
 
 
@@ -25,9 +25,11 @@ export class UserListComponent implements OnInit {
   users:any;
   selectedCityName:any;
   selectedHobbies:any=[];
-  submitted:any;
+  submitted!:boolean;
   selectedValue: any;
   imageData: any;
+  public status:string="";
+
 
 
   constructor(private http:HttpClient,private confirmationService:ConfirmationService) { }
@@ -69,6 +71,7 @@ export class UserListComponent implements OnInit {
       this.selectedHobbies=[];
       this.userdata={};
     }
+      this.submitted=false;
       this.userDialog = true;
   
   }
@@ -88,7 +91,8 @@ export class UserListComponent implements OnInit {
     // this.submitted = false;
   }
   saveUser(){
-    debugger
+
+    this.submitted=true;
     const formData = new FormData();
     this.userdata.hobbies = (this.selectedHobbies).toString();
     this.userdata.City=this.selectedCityName;
@@ -99,7 +103,7 @@ export class UserListComponent implements OnInit {
     formData.append('gender',this.userdata.gender);
     formData.append('city',this.userdata.city);
     formData.append('age',this.userdata.age);
-    formData.append('usersImage',this.userdata.usersImage);
+    formData.append('userImage',this.imageData);
     
 if(this.userdata._id){
      formData.append('id',this.userdata._id);

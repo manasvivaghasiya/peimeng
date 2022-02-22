@@ -21,6 +21,8 @@ import {ImageModule} from 'primeng/image';
 import {FileUploadModule} from 'primeng/fileupload';
 import {CheckboxModule} from 'primeng/checkbox';
 import { ConfirmationService } from 'primeng/api';
+import {InputTextModule} from 'primeng/inputtext';
+
 
 
 
@@ -56,7 +58,8 @@ import { ConfirmationService } from 'primeng/api';
     FileUploadModule,
     CheckboxModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    InputTextModule
   ],
   providers: [ConfirmationService
    

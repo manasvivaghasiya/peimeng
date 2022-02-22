@@ -11,6 +11,10 @@
     background-color: #7061b6;
 }
 
+.p-field{
+    padding: 3px 3px;
+}
+
 .p-paginator {
     padding: 1rem;
 }
