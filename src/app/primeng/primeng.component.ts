@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { product } from './product';
+import { identifierName } from '@angular/compiler';
 
 
 @Component({
@@ -10,158 +11,133 @@ import { product } from './product';
   styleUrls: ['./primeng.component.css']
 })
 export class PrimengComponent implements OnInit {
-  public product: product|any;
-  productdata:product|any;
-  editProductInfo: any;
- public submitted!: boolean;
- public productDialog!:boolean;
- public addShow!:boolean;
- public updateShow!:boolean;
- public hideShow!:boolean;
- 
+  productdata: any;
+  product: any;
+  public productDialog!: boolean;
+  public submitted!: boolean;
+  editInfo:any;
 
-  constructor(private http:HttpClient,private  changeDetectorRef:ChangeDetectorRef) { }
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-     this.getProduct()
-     this.productdata={}
+    this.getProduct()
+    this.productdata = {}
   }
 
-
-  getProduct(){
-   
-     this.http.get(`${environment.apiProduct}/product/get`).subscribe((res:any)=>{
-       this.product= res.data
-       this.changeDetectorRef.detectChanges();
-      console.log(this.product);
-     })
+  getProduct() {
+    this.http.get(`${environment.apiProduct}/product/get`).subscribe((res: any) => {
+      this.product = res.data
+    })
   }
 
-  getByProductId(id:string | undefined){
-      
-    this.http.get(`${environment.apiProduct}/product/get-product-by-id?id=${id}`).subscribe((res:any)=>{
-      this.product.category=res.category;
-      this.product.productName=res.productName;
-      this.product.description=res.description;
-      this.product.price=res.price;
-      this.product.clothSize=res.clothSize;
-      this.product.category=res.inStock;
+  getByProductId(id: string | undefined) {
+
+    this.http.get(`${environment.apiProduct}/product/get-product-by-id?id=${id}`).subscribe((res: any) => {
+      this.product.category = res.category;
+      this.product.productName = res.productName;
+      this.product.description = res.description;
+      this.product.price = res.price;
+      this.product.clothSize = res.clothSize;
+      this.product.category = res.inStock;
       console.log(res);
     })
-    
-  }
-
-  deleteProduct(id:string){
-
-      this.http.delete(`${environment.apiProduct}/product/delete?id=${id}`)
-        .subscribe((res:any)=>{
-        if(res.isSuccess){
-          alert('data successfully delete')
-          this.getProduct();
-       this.changeDetectorRef.detectChanges();
-
-        // this.getByProductId(id);
-        console.log(res);
-        }else{
-          alert(res.message)
-        }
-        // this.product={},
-        // this.productDialog=true;
-      });
 
   }
 
-  openNew(){
-    // this.products = {};
-        // this.submitted = false;
-        this.addShow=true;
-        this.updateShow=false;
-        this.hideShow=true;
-        this.productDialog = true;
-       
-        
+  openNew() {
+    this.productDialog = true;
+  }
+  hideDialog() {
+    this.productDialog = false;
+    this.submitted = false;
   }
 
+  addProduct() {
+   if(this.editInfo){
+      this.updateProduct()
+      return
+   }
+    this.http.post(`${environment.apiProduct}/product/add`, this.productdata).subscribe((res: any) => {
+        this.productDialog = false;
 
-  addProduct(){
-    // if(this.editProductInfo){
-    //     this.updateProduct()
-    //   return
-    // }
-   
-    this.http.post(`${environment.apiProduct}/product/add`,this.productdata).
-    subscribe((res:any)=>{
-      this.getProduct();
-      // this.getByProductId();
-      // this.productDialog=true;
-      this.product=true;
-      this.hideShow=true;
-      this.productDialog=false;
-      if(res.isSuccess){
-        this.editProductInfo=null
-        alert('data added successfully')
+      if (res.isSuccess) {
+        alert('Data added successfully')
+        this.getProduct()
         this.productdata.reset()
-        // this.getProduct()
-        
-      }else{
+      
+
+      } else {
         alert(res.message)
       }
     });
-    this.hideDialog();
+
   }
 
-  updateProduct(id:string){
-    debugger
-    this.product;
-    this.http.post(`${environment.apiProduct}/product/update?id=${id}`,this.productdata)
-.subscribe((res:any) =>{
-  this.getProduct();
-  
+  updateProduct() {
+    this.http.post(`${environment.apiProduct}/api/product/update`, {
+     
+      // ...this.product.value
+    }).subscribe((res: any) => {
+      if (res.isSuccess) {
+        // this.editInfo = null
+        alert('Data updated successfully')
 
-       if(res.isSuccess){
-        this.product.reset()
-        //  this.editProductInfo=null
-        // this.editProduct(this.productdata);
-         alert('data update successfully')
-        this.changeDetectorRef.detectChanges();
-         
-        
-      }else{
-         alert(res.message)
-      
-       }
-     });
-     this.productDialog=false;
-    //  this.product;
+        this.productdata.reset()
+        this.getProduct()
+      } else {
+        alert(res.message)
+      }
+    });
+    this.productDialog = false;
 
-// this.productdata;
-    
-          
-   }
+  }
 
 
-editProduct(product:product){
-  
-
-  this.getProduct();
-  
-  this.productDialog=true;
-  this.updateShow=true;
-  this.addShow=false;
-  this.hideShow=true;
-// this.editProductInfo = product
-
+  editProduct(product:any) {
+    this.editInfo=this.productdata
+    this.productDialog = true;
 this.productdata=product;
-// this.editProductInfo = this.productdata
+    
+    // this.productdata.patchvalue({
+    //   category:payload.category,
+    //   productName:payload.productName,
+    //   description:payload.description,
+    //   price:payload.price,
+    //   clothSize:payload.clothSize,
+    //   inStock:payload.inStock
+    // });
+
+  }
+  // deleteProduct(id: string) {
+  //   this.http.delete(`${environment.apiProduct}/api/product/delete?id=${id}`).subscribe((res: any) => {
+  //     if (res.isSuccess) {
+  //       alert('Data deleted successfully')
+  //       this.getProduct()
+  //     } else {
+  //       alert(res.message)
+  //     }
+  //   })
+  // }
+
+
+  deleteProduct(id:string){
+
+    this.http.delete(`${environment.apiProduct}/product/delete?id=${id}`)
+      .subscribe((res:any)=>{
+      if(res.isSuccess){
+        alert('data successfully delete')
+        this.getProduct();
+
+      // this.getByProductId(id);
+      console.log(res);
+      }else{
+        alert(res.message)
+      }
+      // this.product={},
+      // this.productDialog=true;
+    });
 
 }
 
- hideDialog(){
-    this.productDialog=false;
-    this.submitted=false;
- }
-
-
 }
-
-

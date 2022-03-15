@@ -1,60 +1,66 @@
 <div class="card">
-    
- <p-table #dt [value]="product" [rows]="10">
-       
-     
-<ng-template pTemplate="header">
-    <tr>
-        <th colspan="6">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
 
-        </th>
-    </tr>
-    <tr>
-      
-        <th pSortableColumn="category">Category </th>
-        <th pSortableColumn="productName">productName</th>
-        <th pSortableColumn="description">description</th>
-        <th pSortableColumn="price">price </th>
-        <th pSortableColumn="clothSize">clothSize</th>
-        <th pSortableColumn="inStock">inStock</th>
-        <th></th>
-    </tr>
-</ng-template>
+    <p-table #dt [value]="product" [rows]="10">
 
-<ng-template pTemplate="body" let-product>
-    <tr>
-        <td>{{product.category}}</td>
-        <td>{{product.productName}}</td>
-        <td>{{product.description}}</td>
-        <td>{{product.price}}</td>
-        <td>{{product.clothSize}}</td>
-        <td>{{product.inStock}}</td>
 
-        <td>
-            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
-            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product._id)"></button>
-        </td>
-    </tr>
-</ng-template>
-</p-table>
+        <ng-template pTemplate="header">
+            <tr>
+                <th colspan="6">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                        (click)="openNew()"></button>
+
+                </th>
+            </tr>
+            <tr>
+
+                <th pSortableColumn="category">Category </th>
+                <th pSortableColumn="productName">productName</th>
+                <th pSortableColumn="description">description</th>
+                <th pSortableColumn="price">price </th>
+                <th pSortableColumn="clothSize">clothSize</th>
+                <th pSortableColumn="inStock">inStock</th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.category}}</td>
+                <td>{{product.productName}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.clothSize}}</td>
+                <td>{{product.inStock}}</td>
+
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                        (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteProduct(product._id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '500px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true"
+    styleClass="p-fluid">
     <ng-template pTemplate="content">
-        
-       <div class="p-field">
+
+        <div class="p-field">
             <label class="p-mb-3">Category</label>
             <div class="p-formgrid p-grid">
                 <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category1" name="category" value="Boys" [(ngModel)]="productdata.category"></p-radioButton>
+                    <p-radioButton id="category1" name="category" value="Boys" [(ngModel)]="productdata.category">
+                    </p-radioButton>
                     <label for="category1">boys</label>
                 </div>
                 <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category2" name="category" value="Girls" [(ngModel)]="productdata.category"></p-radioButton>
+                    <p-radioButton id="category2" name="category" value="Girls" [(ngModel)]="productdata.category">
+                    </p-radioButton>
                     <label for="category2">girls</label>
                 </div>
-               
+
             </div>
         </div>
         <br>
@@ -66,7 +72,8 @@
         <br>
         <div class="p-field">
             <label for="description">Description</label>
-            <textarea id="description" pInputTextarea [(ngModel)]="productdata.description" required rows="3" cols="20"></textarea>
+            <textarea id="description" pInputTextarea [(ngModel)]="productdata.description" required rows="3"
+                cols="20"></textarea>
         </div>
         <br>
         <div class="p-field p-col">
@@ -78,25 +85,31 @@
             <label class="p-mb-3">clothSize</label>
             <div class="p-formgrid p-grid">
                 <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="clothSize" name="clothSize" value="XL" [(ngModel)]="productdata.clothSize"></p-radioButton>
+                    <p-radioButton id="clothSize" name="clothSize" value="XL" [(ngModel)]="productdata.clothSize">
+                    </p-radioButton>
                     <label for="clothSize">XL</label>
                 </div>
                 <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="clothSize" name="clothSize" value="L" [(ngModel)]="productdata.clothSize"></p-radioButton>
+                    <p-radioButton id="clothSize" name="clothSize" value="L" [(ngModel)]="productdata.clothSize">
+                    </p-radioButton>
                     <label for="clothSize">L</label>
                 </div>
                 <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="clothSize" name="clothSize" value="XXL" [(ngModel)]="productdata.clothSize"></p-radioButton>
+                    <p-radioButton id="clothSize" name="clothSize" value="XXL" [(ngModel)]="productdata.clothSize">
+                    </p-radioButton>
                     <label for="clothSize">XXL</label>
-                </div>  <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="clothSize" name="clothSize" value="M" [(ngModel)]="productdata.clothSize"></p-radioButton>
+                </div>
+                <div class="p-field-radiobutton p-col-6">
+                    <p-radioButton id="clothSize" name="clothSize" value="M" [(ngModel)]="productdata.clothSize">
+                    </p-radioButton>
                     <label for="clothSize">M</label>
                 </div>
-           <div class="p-field-radiobutton p-col-6">
-                <p-radioButton id="clothSize" name="clothSize" value="S" [(ngModel)]="productdata.clothSize"></p-radioButton>
-                <label for="clothSize">S</label>
-            </div>
-               
+                <div class="p-field-radiobutton p-col-6">
+                    <p-radioButton id="clothSize" name="clothSize" value="S" [(ngModel)]="productdata.clothSize">
+                    </p-radioButton>
+                    <label for="clothSize">S</label>
+                </div>
+
             </div>
 
         </div>
@@ -107,17 +120,17 @@
             <small class="p-invalid" *ngIf="submitted && !productdata.inStock">inStock is required.</small>
         </div>
         <br>
-        <div class="field col-4 " style="float:right " *ngIf="addShow">
+        <div class="field col-4 " style="float:right ">
             <button pButton label="add " pRipple (click)="addProduct() " class="btnaddemployee mb-2 "></button>
         </div>
-        <div class="field col-4"  style="float:right " *ngIf="hideShow">
-            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <div class="field col-4" style="float:right ">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="hideDialog()"></button>
         </div>
-        <div class="field col-4 " style="float:right " *ngIf="updateShow">
-            <button pButton label="update " pRipple (click)="updateProduct(product) " class="btnaddemployee mb-2 "></button>
-        </div>
+        <!-- <div class="field col-4 " style="float:right " *ngIf="updateShow">
+               <button pButton label="update " pRipple (click)="updateProduct(product) " class="btnaddemployee mb-2 "></button>
+           </div>
+    -->
 
-       
     </ng-template>
 </p-dialog>
-    
